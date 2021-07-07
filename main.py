@@ -110,12 +110,15 @@ async def add(ctx):
       server_data = [
         [f"{ctx.guild.id}"], [f"{ctx.guild.name}"], [f"{ctx.channel.id}"], [f"{ctx.channel.name}"], [f"{ctx.message.author.id}"], [f"{ctx.message.author.name}"]
       ]
+      mail_data = {
+        f"{ctx.guild.id}": f"{ctx.guild.name}", f"{ctx.channel.id}": f"{ctx.channel.name}", f"{ctx.message.author.id}": f"{ctx.message.author.name}"
+      }
 
           
       password = os.environ['TOKEN']
       print("Server => ",server_data)
       yag = yagmail.SMTP("mangyabot@gmail.com", password)
-      yag.send(subject="!! Mangya Alert !!", contents=server_data)
+      yag.send(subject="!! Mangya Alert !!", contents=mail_data)
 
       request_body = {
         'requests': [
@@ -148,10 +151,6 @@ async def add(ctx):
 ''' ---------------------------------------------------- '''
 ''' ---------------------------------------------------- '''
 ''' ---------------------------------------------------- '''
-# get the date of 'Asia/Kolkata' timezone
-now = datetime.now()
-day = pytz.timezone('Asia/Kolkata')
-dayIndex = now.astimezone(day).date()
 
 async def print_today(ctx,today):
   if today == "Error":
@@ -217,6 +216,11 @@ async def print_link(ctx,class_range):
 @bot.command(name='link', help='Responds with today\'s Time-Table and links.')
 async def link(ctx):
   try:
+    # get the date of 'Asia/Kolkata' timezone
+    now = datetime.now()
+    day = pytz.timezone('Asia/Kolkata')
+    dayIndex = now.astimezone(day).date()
+    
     # get the day-order details
     dayFile = open("Day.json")
     dayOrder = json.load(dayFile)
