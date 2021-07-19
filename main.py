@@ -15,7 +15,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 
-from flask import Flask
+from flask import Flask, send_file
 from threading import Thread
 
 TOKEN = os.environ['DISCORD_TOKEN']
@@ -37,8 +37,8 @@ async def administrator(ctx):
     values = [['784651679227969536', 'Adarsh Mamgain', '784651679227969539', 'general', '760153623723900982', 'Mangya'], ['841612776567996456', 'Testing Server', '841612776567996459', 'general', '760153623723900982', 'Mangya']]
     total = 0
 
-    embed = Embed(title="BOT UPDATE",description="Now you can get links for any day order from 1-5 or a particular date for the current month.\n\nType '<day [day_order]'\nEG: '**<day 5**'\n\nType '<date [yyyy-mm--dd]'\nEG: '**<date 2021-05-01**'\n\nType '**<help**' to know more about particular commands.",colour=0x6900d3)
-    embed.set_thumbnail(url="https://raw.githubusercontent.com/adarsh-mamgain/image-server/main/Mangya.jpg")
+    embed = Embed(title="BOT UPDATE (v7.2)",description="Fixed major bug, now can join links from Discord.\n\n- After redirecting to Google select the email to use joining the meet.",colour=0x6900d3)
+    embed.set_thumbnail(url="https://mangya.adarshmamgain.repl.co/static/mangya.jpg")
     for a in values:
       guild = bot.get_guild(int(a[0]))
       if guild is None:
@@ -57,7 +57,7 @@ async def help(ctx):
   embed = Embed(title="MangyaBOT",description="Add MangyaBOT to your server -> http://bit.ly/MangyaBOT",url="http://bit.ly/MangyaBOT",colour=0x6900d3)
   embed.set_author(name=f"{ctx.author}")
   embed.set_thumbnail(url=f"{ctx.author.avatar_url_as(format='png')}")
-  embed.set_image(url="https://raw.githubusercontent.com/adarsh-mamgain/image-server/main/donate.JPG")
+  embed.set_image(url="https://mangya.adarshmamgain.repl.co/static/donate.jpg")
   embed.add_field(name="**HELP COMMAND:**", value="List of all available commands of Mangya Bot.", inline=False)
   embed.add_field(name="**add:**", value="Register your server with Course and Time-Table to start recieving links.", inline=False)
   embed.add_field(name="**link:**", value="Responds with todays Time-Table and links.", inline=False)
@@ -70,7 +70,7 @@ async def help(ctx):
 async def donate(ctx):
   embed = Embed() 
   embed = Embed(title="DONATE", description="You can support me by donating a small amount and keep this BOT running.\n\nScan or Download the below QR Code to pay through any UPI app.\n\nThank You :)",colour=0x6900d3)
-  embed.set_image(url="https://raw.githubusercontent.com/adarsh-mamgain/image-server/main/donate.JPG")
+  embed.set_image(url="https://mangya.adarshmamgain.repl.co/static/donate.jpg")
   await ctx.send(embed=embed)
 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
@@ -296,7 +296,7 @@ app = Flask('')
 @app.route('/')
 def home():
   return "Hello Mangya is alive :)"
-
+  
 def run():
   app.run(host='0.0.0.0',port=8080)
   
